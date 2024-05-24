@@ -55,7 +55,7 @@
                                 <h4>Monthly Sales</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($monthlySales, 0, ',', '.') }}
+                              <h5>Rp.  {{ number_format($monthlySales, 0, ',', '.') }}</h5>
                             </div>
                         </div>
                     </div>
