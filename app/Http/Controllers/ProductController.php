@@ -8,25 +8,30 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-
     public function index(Request $request)
-{
-    $products = Product::query()
-        ->select('products.*', 'categories.name as category_name')
-        ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
-        ->when($request->input('name'), function ($query, $name) {
-            $query->where('products.name', 'like', '%' . $name . '%');
-                // ->orWhere('products.email', 'like', '%' . $name . '%');
-        })
-        ->paginate(10);
+    {
+        $products = Product::query()
+            ->select('products.*', 'categories.name as category_name')
+            ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
+            ->when($request->input('name'), function ($query, $name) {
+                $query->where('products.name', 'like', '%' . $name . '%');
+            })
+            ->when($request->input('category'), function ($query, $category) {
+                $query->where('categories.name', $category);
+            })
+            ->paginate(10);
 
-    return view('pages.products.index', compact('products'));
-}
+        $categories = DB::table('categories')->get();
+
+        return view('pages.products.index', compact('products', 'categories'));
+    }
+
     public function create()
     {
         $categories = DB::table('categories')->get();
         return view('pages.products.create', compact('categories'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -38,7 +43,7 @@ class ProductController extends Controller
             'status' => 'required|boolean',
             'is_favorite' => 'required|boolean',
         ]);
-        // store the request...
+
         $product = new Product;
         $product->name = $request->name;
         $product->description = $request->description;
@@ -59,19 +64,21 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
+
     public function show()
     {
         return view('pages.products.show');
     }
+
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        $categories =  DB::table('categories')->get();
+        $categories = DB::table('categories')->get();
         return view('pages.products.edit', compact('product', 'categories'));
     }
+
     public function update(Request $request, $id)
     {
-        // validate the request...
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -101,6 +108,7 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
+
     public function destroy($id)
     {
         $product = Product::find($id);

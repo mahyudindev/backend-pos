@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Login Dapur-Kampoeng')
+@section('title', 'Login')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -36,24 +36,49 @@
                         <label for="password" class="control-label">Password</label>
 
                     </div>
-                    <input id="password" type="password"
-                        class="form-control @error('password')
-                        is-invalid
-                    @enderror"
-                        name="password" tabindex="2">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                        <input id="password" type="password"
+                            class="form-control @error('password')
+                            is-invalid
+                        @enderror"
+                            name="password" tabindex="2">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
                     @error('password')
                         <div class="invalid-feedback">
                             {{ $message }}
-                        @enderror
+                        </div>
+                    @enderror
 
-                    </div>
+                    <script>
+                        const togglePassword = document.querySelector('#togglePassword');
+                        const passwordInput = document.querySelector('#password');
+
+                        togglePassword.addEventListener('click', function() {
+                            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                            passwordInput.setAttribute('type', type);
+
+                            this.classList.toggle('fa-eye-slash');
+                        });
+                    </script>
+
+                </div>
 
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                            Login
-                        </button>
-                    </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                        Login
+                    </button>
+                </div>
             </form>
 
 
@@ -66,6 +91,5 @@
 
 @push('scripts')
     <!-- JS Libraies -->
-
     <!-- Page Specific JS File -->
 @endpush

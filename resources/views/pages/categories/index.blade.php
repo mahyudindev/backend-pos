@@ -56,7 +56,6 @@
 
                                             <th>Name</th>
                                             <th>Create At</th>
-                                            <th>Action</th>
                                         </tr>
                                         @foreach ($categories as $category)
                                             <tr>

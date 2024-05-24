@@ -1,10 +1,10 @@
 body.skin-reverse.sidebar-mini .main-sidebar:after {
-  background-color: #6777ef;
+  background-color: #3f4047;
 }
 body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li.active > a {
   background-color: #fff;
   box-shadow: none;
-  color: #6777ef;
+  color: #3f4047;
 }
 body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li.active ul.dropdown-menu li a,
 body.skin-reverse.sidebar-mini .main-sidebar .sidebar-menu li ul.dropdown-menu li a {
