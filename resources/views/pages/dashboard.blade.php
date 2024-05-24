@@ -25,7 +25,7 @@
                                 <h4>Today Sales</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($todaySales, 0, ',', '.') }}
+                                <h5>Rp. {{ number_format($todaySales, 0, ',', '.') }}</h5>
                             </div>
                         </div>
                     </div>
@@ -33,14 +33,14 @@
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-danger">
-                            <i class="far fa-newspaper"></i>
+                            <i class="fas fa-chart-pie"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>News</h4>
+                                <h4>Weekly Sales</h4>
                             </div>
                             <div class="card-body">
-                                42
+                                <h5>Rp.{{ number_format($weeklySales, 0, ',', '.') }}</h5>
                             </div>
                         </div>
                     </div>
@@ -48,29 +48,14 @@
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-warning">
-                            <i class="far fa-file"></i>
+                            <i class="fas fa-chart-pie"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Reports</h4>
+                                <h4>Monthly Sales</h4>
                             </div>
                             <div class="card-body">
-                                1,201
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-circle"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Online Users</h4>
-                            </div>
-                            <div class="card-body">
-                                47
+                                {{ number_format($monthlySales, 0, ',', '.') }}
                             </div>
                         </div>
                     </div>

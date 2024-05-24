@@ -94,7 +94,6 @@
         </div>
     </div>
 @endsection
-
 @push('scripts')
     <!-- Page Specific JS File -->
 @endpush
