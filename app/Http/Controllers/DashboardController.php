@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -22,9 +23,16 @@ class DashboardController extends Controller
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
         $monthlySales = Order::where('transaction_time', '>=', $startOfMonth)
-                        ->where('transaction_time', '<=', Carbon::today())
+                        ->where('transaction_time', '<=', Carbon::now()) // Menggunakan Carbon::now() untuk memastikan transaksi hari ini juga termasuk
                         ->sum('total');
 
-        return view('pages.dashboard', compact('todaySales', 'weeklySales', 'monthlySales'));
+        // Item terlaris
+        $bestSellingItems = OrderItem::select('product_id', \DB::raw('SUM(quantity) as total_quantity'))
+                        ->groupBy('product_id')
+                        ->orderByDesc('total_quantity')
+                        ->take(10) // Ambil 10 item terlaris
+                        ->get();
+
+        return view('pages.dashboard', compact('todaySales', 'weeklySales', 'monthlySales', 'bestSellingItems'));
     }
 }
