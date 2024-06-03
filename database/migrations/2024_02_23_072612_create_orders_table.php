@@ -14,10 +14,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->integer('payment_amount');
-            $table->integer('sub_total');
-            $table->integer('tax');
-            $table->integer('discount');
-            $table->integer('service_charge');
             $table->integer('total');
             $table->string('payment_method');
             $table->integer('total_item');

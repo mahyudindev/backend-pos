@@ -14,28 +14,18 @@ class OrderController extends Controller
         //validate request
         $request->validate([
             'payment_amount' => 'required',
-            'sub_total' => 'required',
-            'tax' => 'required',
-            'discount' => 'required',
-            'discount_amount' => 'required',
-            'service_charge' => 'required',
             'total' => 'required',
             'payment_method' => 'required',
             'total_item' => 'required',
             'id_kasir' => 'required',
             'nama_kasir' => 'required',
             'transaction_time' => 'required',
-            // 'order_items' => 'required'
+            'order_items' => 'required'
         ]);
 
         //create order
         $order = Order::create([
             'payment_amount' => $request->payment_amount,
-            'sub_total' => $request->sub_total,
-            'tax' => $request->tax,
-            'discount' => $request->discount,
-            'discount_amount' => $request->discount_amount,
-            'service_charge' => $request->service_charge,
             'total' => $request->total,
             'payment_method' => $request->payment_method,
             'total_item' => $request->total_item,
@@ -83,23 +73,12 @@ class OrderController extends Controller
         if ($startDate && $endDate) {
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
-        $totalRevenue = $query->sum('payment_amount');
-        $totalDiscount = $query->sum('discount_amount');
-        $totalTax = $query->sum('tax');
-        $totalServiceCharge = $query->sum('service_charge');
-        $totalSubtotal = $query->sum('sub_total');
-        $total = $totalSubtotal - $totalDiscount - $totalTax + $totalServiceCharge;
+        $totalRevenue = $query->sum('total');
         return response()->json([
             'status' => 'success',
             'data' => [
-                'total_revenue' => $totalRevenue,
-                'total_discount' => $totalDiscount,
-                'total_tax' => $totalTax,
-                'total_subtotal' => $totalSubtotal,
-                'total_service_charge' => $totalServiceCharge,
-                'total' => $total,
+                'total_revenue' => $totalRevenue
             ]
         ], 200);
     }
-
 }
