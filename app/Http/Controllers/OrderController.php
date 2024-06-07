@@ -1,49 +1,4 @@
 <?php
-
-
-// namespace App\Http\Controllers;
-
-// use App\Models\Order;
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Session;
-
-// class OrderController extends Controller
-// {
-//     public function index(Request $request)
-//     {
-//         // Retrieve filter values from request or session
-//         $startDate = $request->input('start_date') ?: Session::get('start_date');
-//         $endDate = $request->input('end_date') ?: Session::get('end_date');
-
-//         // Update session with the latest filter values
-//         if ($startDate) {
-//             Session::put('start_date', $startDate);
-//         }
-//         if ($endDate) {
-//             Session::put('end_date', $endDate);
-//         }
-
-//         // Create a new query
-//         $query = Order::query();
-
-//         // Apply date filter if provided
-//         if ($startDate && $endDate) {
-//             $query->whereBetween('transaction_time', [$startDate, $endDate]);
-//         }
-
-//         // Paginate the results
-//         $orders = $query->paginate(15);
-
-//         // Calculate total amount and total items for the current page
-//         $totalAmount = $orders->sum('total');
-//         $totalItems = $orders->sum('total_item');
-
-//         return view('pages.sales.index', compact('orders', 'totalAmount', 'totalItems', 'startDate', 'endDate'));
-//     }
-// }
-
-//==>> Baru
-
 namespace App\Http\Controllers;
 
 use App\Models\Order;
@@ -58,6 +13,7 @@ class OrderController extends Controller
         // Retrieve filter values from request or session
         $startDate = $request->input('start_date') ?: Session::get('start_date');
         $endDate = $request->input('end_date') ?: Session::get('end_date');
+        $cashierName = $request->input('cashier_name');
 
         // Update session with the latest filter values
         if ($startDate) {
@@ -75,6 +31,11 @@ class OrderController extends Controller
             $query->whereBetween('transaction_time', [$startDate, $endDate]);
         }
 
+        // Apply cashier name filter if provided
+        if ($cashierName) {
+            $query->where('nama_kasir', 'like', '%' . $cashierName . '%');
+        }
+
         // Paginate the results
         $orders = $query->paginate(100);
 
@@ -82,7 +43,7 @@ class OrderController extends Controller
         $totalAmount = $orders->sum('total');
         $totalItems = $orders->sum('total_item');
 
-        return view('pages.sales.index', compact('orders', 'totalAmount', 'totalItems', 'startDate', 'endDate'));
+        return view('pages.sales.index', compact('orders', 'totalAmount', 'totalItems', 'startDate', 'endDate', 'cashierName'));
     }
 
     public function create()
@@ -135,4 +96,3 @@ class OrderController extends Controller
         return redirect()->route('orders.create')->with('success', 'Product removed from order.');
     }
 }
-

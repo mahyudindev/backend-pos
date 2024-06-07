@@ -55,6 +55,11 @@
                                                         class="form-control">
                                                 </div>
                                                 <div class="col">
+                                                    <label for="cashier_name">Cashier Name:</label>
+                                                    <input type="text" id="cashier_name" name="cashier_name"
+                                                        class="form-control" placeholder="Cashier Name">
+                                                </div>
+                                                <div class="col">
                                                     <button type="submit" class="btn btn-primary">Filter</button>
                                                 </div>
                                             </div>

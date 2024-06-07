@@ -27,7 +27,6 @@
             <div class="section-body">
                 <h2 class="section-title">Product</h2>
 
-
                 <div class="card">
                     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -37,10 +36,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                            @enderror"
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
                                     name="name">
                                 @error('name')
                                     <div class="invalid-feedback">
@@ -49,24 +45,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text"
-                                    class="form-control @error('description')
-                                is-invalid
-                            @enderror"
-                                    name="description">
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
                                 <label>Price</label>
-                                <input type="number"
-                                    class="form-control @error('price')
-                                is-invalid
-                            @enderror"
+                                <input type="number" class="form-control @error('price') is-invalid @enderror"
                                     name="price">
                                 @error('price')
                                     <div class="invalid-feedback">
@@ -76,10 +56,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Stock</label>
-                                <input type="number"
-                                    class="form-control @error('stock')
-                                is-invalid
-                            @enderror"
+                                <input type="number" class="form-control @error('stock') is-invalid @enderror"
                                     name="stock">
                                 @error('stock')
                                     <div class="invalid-feedback">
@@ -142,15 +119,12 @@
                                     </label>
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="card-footer text-right">
                             <button class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
-
             </div>
         </section>
     </div>

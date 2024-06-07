@@ -50,7 +50,7 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Description</label>
                                 <input type="text"
                                     class="form-control @error('description')
@@ -62,7 +62,7 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label>Price</label>
                                 <input type="number"
