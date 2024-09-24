@@ -13,16 +13,26 @@
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown">
+
                     <i class="fas fa-user-friends"></i><span>Users</span>
+
                 </a>
                 <ul class="dropdown-menu">
+
+                    @if(Auth::user()->role == 'admin')
                     <li>
                         <a class="nav-link" href="{{ route('user.index') }}">All Users</a>
                     </li>
                     <li>
                         <a class="nav-link" href="{{ route('user.create') }}">Create User</a>
                     </li>
+                    @elseif(Auth::user()->role == 'user')
+                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+
+                    @endif
+
                 </ul>
+
             </li>
 
             <li class="nav-item dropdown">

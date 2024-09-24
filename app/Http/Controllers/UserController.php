@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -8,14 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index (Request $request){
+    public function index(Request $request)
+    {
         $users = DB::table('users')
-        ->when($request->input('name'), function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%')
-                ->orWhere('email', 'like', '%' . $name . '%');
-        })
-        ->paginate(10);
-    return view('pages.users.index', compact('users'));
+            ->when($request->input('name'), function ($query, $name) {
+                $query->where('name', 'like', '%' . $name . '%')
+                    ->orWhere('email', 'like', '%' . $name . '%');
+            })
+            ->paginate(10);
+        return view('pages.users.index', compact('users'));
     }
 
     public function create()
@@ -32,6 +34,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:5',
+            'name_toko' => 'required|min:10',
             'role' => 'required|in:admin,staff,user',
         ]);
 
@@ -40,6 +43,7 @@ class UserController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->name_toko = $request->name_toko;
         $user->password = Hash::make($request->password);
         $user->role = $request->role;
         $user->save();

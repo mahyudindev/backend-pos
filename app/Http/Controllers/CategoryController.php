@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -10,14 +12,15 @@ class CategoryController extends Controller
 
 
 
-    public function index (Request $request){
+    public function index(Request $request)
+    {
+        $userId = Auth::id();
         $categories = DB::table('categories')
-        ->when($request->input('name'), function ($query, $name) {
-            $query->where('name', 'like', '%' . $name . '%');
-
-        })
-        ->paginate(10);
-    return view('pages.categories.index', compact('categories'));
+            ->when($request->input('name'), function ($query, $name) {
+                $query->where('name', 'like', '%' . $name . '%');
+            })
+            ->paginate(10);
+        return view('pages.categories.index', compact('categories'));
     }
 
     public function create()
@@ -55,7 +58,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->name = $request->name;
         $category->description = $request->description;
-        if ($request->has('image')){
+        if ($request->has('image')) {
             if (file_exists(public_path('storage/categories/' . $category->id . '.' . $category->image))) {
                 unlink(public_path('storage/categories/' . $category->id . '.' . $category->image));
             }
@@ -75,4 +78,3 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
     }
 }
-
